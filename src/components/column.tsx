@@ -12,18 +12,15 @@ export const Column: React.FC<ColumnProp> = ({ column, onDelete, id }) => {
   const { color, Container } = useColour();
   const [columnTitle, setColumnTitle] = useState("Titulo");
   const [opened, setMenu] = useState(false);
-  const [notes, setNotes] = useState<Note[]>(column); // Initialize with the passed column
-  
+  const [notes, setNotes] = useState<Note[]>(column);
+  const [editNote, setEditNote] = useState({ title: "", text: "" });
   
   const [editingNoteIndex, setEditingNoteIndex] = useState<number | null>(null);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColumnTitle(e.target.value);
   };
-
   
-
-  const [editNote, setEditNote] = useState({ title: "", text: "" });
 
   const deleteNote = (index: number) => {
     const updatedNotes = [...notes];
@@ -116,7 +113,7 @@ const EditNoteForm=({setNotes,notes,editingNoteIndex,editNote,setEditNote,setEdi
       const updatedNotes = [...notes];
       updatedNotes[editingNoteIndex] = { title: editNote.title, text: editNote.text };
       setNotes(updatedNotes);
-      setEditingNoteIndex(null); // Hide the form after editing a note
+      setEditingNoteIndex(null); 
     }
   };
 
@@ -160,7 +157,7 @@ const AddForm=({setNotes,notes}:{setNotes:Dispatch<SetStateAction<Note[]>>,notes
       const newNoteObj: Note = { title: newNote.title, text: newNote.text };
       setNotes([...notes, newNoteObj]);
       setNewNote({ title: "", text: "" });
-      setAdd(false); // Hide the form after adding a note
+      setAdd(false);
     }
   };
 
