@@ -15,6 +15,9 @@ export const Column: React.FC<ColumnProp> = ({ column, onDelete, id }) => {
   const [notes, setNotes] = useState<Note[]>(column);
   const [editNote, setEditNote] = useState({ title: "", text: "" });
   const [editingNoteIndex, setEditingNoteIndex] = useState<number | null>(null);
+
+
+  
   
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
