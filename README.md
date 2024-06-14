@@ -23,7 +23,7 @@ Memo Practice is a mini React project designed to help users practice and enhanc
 **How to Run the Project:**
 1. **Clone the repository:**
    ```
-   git clone https://github.com/yourusername/memo-practice.git
+   git clone https://github.com/matiashernandezkopi/memo-practice.git
    cd memo-practice
    ```
 2. **Install dependencies:**
