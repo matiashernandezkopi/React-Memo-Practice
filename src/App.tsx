@@ -12,11 +12,11 @@ function App() {
 
   const [columns, setColumns] = useState<Columna[]>([
     {
-      id: 1, // Nuevo: Asignar un id único
+      id: 1, 
       array: [{ title: "nota1", text: "texto1" }]
     },
     {
-      id: 2, // Nuevo: Asignar un id único
+      id: 2, 
       array: [{ title: "nota2", text: "texto2" }]
     }
   ]);
@@ -27,17 +27,51 @@ function App() {
     setid(id+1)
   };
 
-  const deleteColumn = (id: number) => { // Cambiado: Recibe el id de la columna a eliminar
+  const deleteColumn = (id: number) => {
 
-    const updatedColumns = columns.filter(column => {
-      console.log(column.id ,id);
-      
-      
-      return column.id !== id}); // Nuevo: Filtrar las columnas para eliminar la que tenga el id dado
-    console.log(updatedColumns);
+    const updatedColumns = columns.filter(column => column.id !== id); 
     
     setColumns(updatedColumns);
 
+  };
+
+  const deleteNote = (columnId: number, noteIndex: number) => {
+    const updatedColumns = columns.map(column => {
+      if (column.id === columnId) {
+        return {
+         ...column,
+          array: column.array.filter((_,index) => index!== noteIndex)
+
+        };
+      }
+      return column;
+    });
+    setColumns(updatedColumns);
+  }
+
+  const addNote = (columnId: number, { title, text }: { title: string; text: string }) => {
+    const updatedColumns = columns.map(column => {
+      if (column.id === columnId) {
+        return {
+         ...column,
+          array: [...column.array, { title, text }]
+        };
+      }
+      return column;
+    });
+    setColumns(updatedColumns);
+  };
+
+
+  const editNote = (columnId: number, noteIndex: number, updatedNote: Note) => {
+    const updatedColumns = columns.map(column => {
+      if (column.id === columnId) {
+        const updatedArray = column.array.map((note, index) => index === noteIndex ? updatedNote : note);
+        return { ...column, array: updatedArray };
+      }
+      return column;
+    });
+    setColumns(updatedColumns);
   };
 
   return (
@@ -46,10 +80,13 @@ function App() {
       <div className='flex justify-evenly w-full items-center h-4/5'>
         {columns.map((column) => (
           <Column
-            key={column.id} // Cambiado: Usar el id como clave en lugar del índice
+            key={column.id} 
             column={column.array}
             id={column.id}
             onDelete={deleteColumn}
+            onDeleteNote={deleteNote}
+            onAddNote={addNote}
+            onEditNote={editNote}
           />
         ))}
         <button onClick={() => addColumn({ columnTitle: `columntittle= this id is ${id}`, title: "aaa", text: "aaa" })} className="w-20 h-20 bg-slate-700 text-6xl text-white rounded-2xl border-4 border-slate-900 hover:bg-gray-800">
